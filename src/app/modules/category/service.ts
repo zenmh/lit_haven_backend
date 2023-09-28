@@ -45,6 +45,7 @@ const getCategories = async (
     take: limit,
     orderBy:
       sortBy && sortOrder ? { [sortBy]: sortOrder } : { createdAt: "desc" },
+    include: { books: true },
   });
 
   const total = await prisma.category.count({ where });
@@ -56,9 +57,23 @@ const getCategories = async (
 };
 
 const getCategory = async (id: string): Promise<Category | null> => {
-  const result = await prisma.category.findFirst({ where: { id } });
+  const result = await prisma.category.findFirst({
+    where: { id },
+    include: { books: true },
+  });
 
   return result;
 };
 
-export const CategoryService = { createCategory, getCategories, getCategory };
+const deleteCategory = async (id: string): Promise<Category> => {
+  const result = await prisma.category.delete({ where: { id } });
+
+  return result;
+};
+
+export const CategoryService = {
+  createCategory,
+  getCategories,
+  getCategory,
+  deleteCategory,
+};
