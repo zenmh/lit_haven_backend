@@ -78,4 +78,15 @@ const getBooksByCategoryId = async (
   };
 };
 
-export const BookService = { createBook, getBooks, getBooksByCategoryId };
+const getBook = async (id: string): Promise<Book | null> => {
+  const result = await prisma.book.findFirst({ where: { id } });
+
+  return result;
+};
+
+export const BookService = {
+  createBook,
+  getBooks,
+  getBooksByCategoryId,
+  getBook,
+};
