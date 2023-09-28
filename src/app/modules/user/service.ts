@@ -48,4 +48,13 @@ const getUsers = async (
   };
 };
 
-export const UserService = { getUsers };
+const getUser = async (id: string): Promise<User | null> => {
+  const result = await prisma.user.findFirst({
+    where: { id },
+    include: { orders: true },
+  });
+
+  return result;
+};
+
+export const UserService = { getUsers, getUser };
