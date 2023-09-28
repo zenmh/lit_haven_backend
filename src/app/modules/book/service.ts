@@ -58,4 +58,24 @@ const getBooks = async (
   };
 };
 
-export const BookService = { createBook, getBooks };
+const getBooksByCategoryId = async (
+  categoryId: string,
+  options: IPaginationOptions
+): Promise<IGenericResponse<Book[]>> => {
+  const { page, limit, skip } = calculatePagination(options);
+
+  const result = await prisma.book.findMany({
+    where: { categoryId },
+    skip,
+    take: limit,
+  });
+
+  const total = await prisma.book.count({ where: { categoryId } });
+
+  return {
+    meta: { page, limit, total },
+    data: result,
+  };
+};
+
+export const BookService = { createBook, getBooks, getBooksByCategoryId };

@@ -33,4 +33,21 @@ const getBooks = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const BookController = { createBook, getBooks };
+const getBooksByCategoryId = catchAsync(async (req: Request, res: Response) => {
+  const options = pick(req.query, paginationFields);
+
+  const { meta, data } = await BookService.getBooksByCategoryId(
+    req.params.categoryId,
+    options
+  );
+
+  sendResponse<Book[]>(res, {
+    statusCode: 200,
+    success: true,
+    message: "Books with associated category data fetched successfully",
+    meta,
+    data,
+  });
+});
+
+export const BookController = { createBook, getBooks, getBooksByCategoryId };
