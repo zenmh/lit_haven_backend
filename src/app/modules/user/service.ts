@@ -66,4 +66,13 @@ const updateUser = async (
   return result;
 };
 
-export const UserService = { getUsers, getUser, updateUser };
+const deleteUser = async (id: string): Promise<User> => {
+  const result = await prisma.user.delete({
+    where: { id },
+    include: { orders: true },
+  });
+
+  return result;
+};
+
+export const UserService = { getUsers, getUser, updateUser, deleteUser };

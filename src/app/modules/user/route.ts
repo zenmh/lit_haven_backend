@@ -4,10 +4,11 @@ import validateRequest from "../../middlewares/validateRequest";
 import { ZUpdateUser } from "./validation";
 
 const router = Router();
-const { getUsers, getUser, updateUser } = UserController;
+const { getUsers, getUser, updateUser, deleteUser } = UserController;
 
 router
   .patch("/:id", validateRequest(ZUpdateUser), updateUser)
+  .delete("/:id", deleteUser)
   .get("/", getUsers)
   .get("/:id", getUser);
 
