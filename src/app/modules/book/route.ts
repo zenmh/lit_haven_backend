@@ -4,8 +4,10 @@ import { ZCreateBook } from "./validation";
 import { BookController } from "./controller";
 
 const router = Router();
-const { createBook } = BookController;
+const { createBook, getBooks } = BookController;
 
-router.post("/create-book", validateRequest(ZCreateBook), createBook);
+router
+  .post("/create-book", validateRequest(ZCreateBook), createBook)
+  .get("/", getBooks);
 
 export const BookRoutes = router;

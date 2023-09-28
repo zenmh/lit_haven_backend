@@ -43,7 +43,7 @@ const getUsers = async (
   const total = await prisma.user.count({ where });
 
   return {
-    meta: { total, page, limit },
+    meta: { page, limit, total },
     data: result,
   };
 };
