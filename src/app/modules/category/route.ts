@@ -4,8 +4,13 @@ import { ZCreateOrUpdateCategory } from "./validation";
 import { CategoryController } from "./controller";
 
 const router = Router();
-const { createCategory, getCategories, getCategory, deleteCategory } =
-  CategoryController;
+const {
+  createCategory,
+  getCategories,
+  getCategory,
+  updateCategory,
+  deleteCategory,
+} = CategoryController;
 
 router
   .post(
@@ -13,6 +18,7 @@ router
     validateRequest(ZCreateOrUpdateCategory),
     createCategory
   )
+  .patch("/:id", validateRequest(ZCreateOrUpdateCategory), updateCategory)
   .delete("/:id", deleteCategory)
   .get("/", getCategories)
   .get("/:id", getCategory);
