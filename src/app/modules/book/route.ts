@@ -4,12 +4,19 @@ import { ZCreateBook, ZUpdateBook } from "./validation";
 import { BookController } from "./controller";
 
 const router = Router();
-const { createBook, getBooks, getBooksByCategoryId, getBook, updateBook } =
-  BookController;
+const {
+  createBook,
+  getBooks,
+  getBooksByCategoryId,
+  getBook,
+  updateBook,
+  deleteBook,
+} = BookController;
 
 router
   .post("/create-book", validateRequest(ZCreateBook), createBook)
   .patch("/:id", validateRequest(ZUpdateBook), updateBook)
+  .delete("/:id", deleteBook)
   .get("/", getBooks)
   .get("/:categoryId/category", getBooksByCategoryId)
   .get("/:id", getBook);
