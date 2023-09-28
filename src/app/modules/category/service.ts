@@ -55,4 +55,10 @@ const getCategories = async (
   };
 };
 
-export const CategoryService = { createCategory, getCategories };
+const getCategory = async (id: string): Promise<Category | null> => {
+  const result = await prisma.category.findFirst({ where: { id } });
+
+  return result;
+};
+
+export const CategoryService = { createCategory, getCategories, getCategory };

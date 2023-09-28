@@ -27,10 +27,25 @@ const getCategories = catchAsync(async (req: Request, res: Response) => {
   sendResponse<Category[]>(res, {
     statusCode: 200,
     success: true,
-    message: "Category created successfully",
+    message: "Categories retrived successfully",
     meta,
     data,
   });
 });
 
-export const CategoryController = { createCategory, getCategories };
+const getCategory = catchAsync(async (req: Request, res: Response) => {
+  const result = await CategoryService.getCategory(req.params.id);
+
+  sendResponse<Category>(res, {
+    statusCode: 200,
+    success: true,
+    message: "Category retrived successfully",
+    data: result,
+  });
+});
+
+export const CategoryController = {
+  createCategory,
+  getCategories,
+  getCategory,
+};

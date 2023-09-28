@@ -4,7 +4,7 @@ import { ZCreateOrUpdateCategory } from "./validation";
 import { CategoryController } from "./controller";
 
 const router = Router();
-const { createCategory, getCategories } = CategoryController;
+const { createCategory, getCategories, getCategory } = CategoryController;
 
 router
   .post(
@@ -12,6 +12,7 @@ router
     validateRequest(ZCreateOrUpdateCategory),
     createCategory
   )
-  .get("/", getCategories);
+  .get("/", getCategories)
+  .get("/:id", getCategory);
 
 export const CategoryRoutes = router;
