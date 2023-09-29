@@ -8,7 +8,7 @@ import { paginationFields } from "../../../constants/pagination";
 
 const createOrder = catchAsync(async (req: Request, res: Response) => {
   const order = {
-    userId: "b6bc163d-a456-47dd-aae8-150a920062d5",
+    userId: "f5233098-d9d4-4bc4-8574-001e46df6983",
     orderedBooks: req.body.orderedBooks,
   };
 
@@ -36,4 +36,28 @@ const getOrders = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const OrderController = { createOrder, getOrders };
+const getOrdersForSpecificCustomer = catchAsync(
+  async (req: Request, res: Response) => {
+    const options = pick(req.query, paginationFields);
+    const userId = "f5233098-d9d4-4bc4-8574-001e46df6983";
+
+    const { meta, data } = await OrderService.getOrdersForSpecificCustomer(
+      userId,
+      options
+    );
+
+    sendResponse<Order[]>(res, {
+      statusCode: 200,
+      success: true,
+      message: "Orders retrieved successfully",
+      meta,
+      data,
+    });
+  }
+);
+
+export const OrderController = {
+  createOrder,
+  getOrders,
+  getOrdersForSpecificCustomer,
+};

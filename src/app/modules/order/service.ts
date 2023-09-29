@@ -46,4 +46,30 @@ const getOrders = async (
   };
 };
 
-export const OrderService = { createOrder, getOrders };
+const getOrdersForSpecificCustomer = async (
+  userId: string,
+  options: IPaginationOptions
+): Promise<IGenericResponse<Order[]>> => {
+  const { page, limit, skip, sortBy, sortOrder } = calculatePagination(options);
+
+  const result = await prisma.order.findMany({
+    skip,
+    take: limit,
+    where: { userId },
+    orderBy:
+      sortBy && sortOrder ? { [sortBy]: sortOrder } : { createdAt: "desc" },
+  });
+
+  const total = await prisma.order.count({ where: { userId } });
+
+  return {
+    meta: { page, limit, total },
+    data: result,
+  };
+};
+
+export const OrderService = {
+  createOrder,
+  getOrders,
+  getOrdersForSpecificCustomer,
+};
