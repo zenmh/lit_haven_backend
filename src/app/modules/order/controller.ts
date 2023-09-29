@@ -3,6 +3,8 @@ import catchAsync from "../../../shared/catchAsync";
 import { OrderService } from "./service";
 import sendResponse from "../../../shared/sendResponse";
 import { Order } from "@prisma/client";
+import pick from "../../../shared/pick";
+import { paginationFields } from "../../../constants/pagination";
 
 const createOrder = catchAsync(async (req: Request, res: Response) => {
   const order = {
@@ -20,4 +22,18 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const OrderController = { createOrder };
+const getOrders = catchAsync(async (req: Request, res: Response) => {
+  const options = pick(req.query, paginationFields);
+
+  const { meta, data } = await OrderService.getOrders(options);
+
+  sendResponse<Order[]>(res, {
+    statusCode: 200,
+    success: true,
+    message: "Orders retrieved successfully",
+    meta,
+    data,
+  });
+});
+
+export const OrderController = { createOrder, getOrders };
