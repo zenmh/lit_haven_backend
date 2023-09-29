@@ -61,7 +61,7 @@ CREATE TABLE "review_and_ratings" (
 -- CreateTable
 CREATE TABLE "orders" (
     "id" TEXT NOT NULL,
-    "orderedBooks" JSONB NOT NULL,
+    "orderedBooks" JSONB[],
     "status" "Status" NOT NULL DEFAULT 'PENDING',
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

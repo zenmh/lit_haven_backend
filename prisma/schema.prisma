@@ -85,9 +85,10 @@ enum Status {
   DELIVERED
 }
 
+
 model Order {
   id String @id @default(uuid())
-  orderedBooks Json
+  orderedBooks Json[]
   status Status @default(PENDING)
 
   userId String
