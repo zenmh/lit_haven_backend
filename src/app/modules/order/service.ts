@@ -68,8 +68,15 @@ const getOrdersForSpecificCustomer = async (
   };
 };
 
+const getOrder = async (id: string): Promise<Order | null> => {
+  const result = await prisma.order.findFirst({ where: { id } });
+
+  return result;
+};
+
 export const OrderService = {
   createOrder,
   getOrders,
   getOrdersForSpecificCustomer,
+  getOrder,
 };

@@ -56,8 +56,20 @@ const getOrdersForSpecificCustomer = catchAsync(
   }
 );
 
+const getOrder = catchAsync(async (req: Request, res: Response) => {
+  const result = await OrderService.getOrder(req.params.id);
+
+  sendResponse<Order>(res, {
+    statusCode: 200,
+    success: true,
+    message: "Order fatched successfully",
+    data: result,
+  });
+});
+
 export const OrderController = {
   createOrder,
   getOrders,
   getOrdersForSpecificCustomer,
+  getOrder,
 };
