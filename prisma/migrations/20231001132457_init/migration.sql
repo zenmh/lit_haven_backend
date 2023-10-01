@@ -1,8 +1,8 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('ADMIN', 'CUSTOMER');
+CREATE TYPE "Role" AS ENUM ('admin', 'customer');
 
 -- CreateEnum
-CREATE TYPE "Status" AS ENUM ('PENDING', 'SHIPPED', 'DELIVERED');
+CREATE TYPE "Status" AS ENUM ('pending', 'shipped', 'delivered');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -10,7 +10,7 @@ CREATE TABLE "users" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'CUSTOMER',
+    "role" "Role" NOT NULL DEFAULT 'customer',
     "contactNo" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "profileImg" TEXT NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE "review_and_ratings" (
 CREATE TABLE "orders" (
     "id" TEXT NOT NULL,
     "orderedBooks" JSONB[],
-    "status" "Status" NOT NULL DEFAULT 'PENDING',
+    "status" "Status" NOT NULL DEFAULT 'pending',
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

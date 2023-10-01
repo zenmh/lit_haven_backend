@@ -3,6 +3,7 @@ import catchAsync from "../../../shared/catchAsync";
 import { AuthService } from "./service";
 import sendResponse from "../../../shared/sendResponse";
 import config from "../../../config";
+import { IRefreshTokenResponse, ISignInResponse } from "./interface";
 
 const signUp = catchAsync(async (req: Request, res: Response) => {
   const { password, ...result } = await AuthService.signUp(req.body);
@@ -23,11 +24,11 @@ const signIn = catchAsync(async (req: Request, res: Response) => {
     httpOnly: true,
   });
 
-  sendResponse(res, {
+  sendResponse<ISignInResponse>(res, {
     statusCode: 200,
     success: true,
     message: "User signin successfully!",
-    data: accessToken,
+    data: { accessToken },
   });
 });
 
@@ -41,7 +42,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
     httpOnly: true,
   });
 
-  sendResponse(res, {
+  sendResponse<IRefreshTokenResponse>(res, {
     statusCode: 200,
     success: true,
     message: "User logged in successfully successfully!",

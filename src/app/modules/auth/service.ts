@@ -48,14 +48,14 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
     throw new ApiError(403, "Invalid refresh token !");
   }
 
-  const { id } = verifiedToken;
+  const { userId: id } = verifiedToken;
 
   const isUserExist = await prisma.user.findFirst({ where: { id } });
 
   if (!isUserExist) throw new ApiError(404, "User not found !");
 
   const newAccessToken = createToken(
-    { id: isUserExist.id, role: isUserExist.role },
+    { userId: isUserExist.id, role: isUserExist.role },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );

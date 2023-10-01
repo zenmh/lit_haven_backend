@@ -12,7 +12,7 @@ const auth =
 
       if (!token) throw new ApiError(401, "You are not authorized");
 
-      let verifiedUser = null;
+      let verifiedUser;
 
       verifiedUser = verifyToken(token, config.jwt.secret as Secret);
 

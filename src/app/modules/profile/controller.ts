@@ -5,7 +5,7 @@ import sendResponse from "../../../shared/sendResponse";
 import { User } from "@prisma/client";
 
 const getProfile = catchAsync(async (req: Request, res: Response) => {
-  const result = await ProfileService.getProfile(req.params.id); // id have to pass from token
+  const result = await ProfileService.getProfile(req.user?.userId);
 
   sendResponse<User>(res, {
     statusCode: 200,

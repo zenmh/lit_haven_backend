@@ -8,8 +8,8 @@ datasource db {
 }
 
 enum Role { 
-  ADMIN 
-  CUSTOMER
+  admin 
+  customer
 }
 
 model User {
@@ -17,7 +17,7 @@ model User {
   name  String
   email String @unique
   password String
-  role Role @default(CUSTOMER)
+  role Role @default(customer)
   contactNo String
   address String
   profileImg String
@@ -80,16 +80,16 @@ model ReviewAndRating {
 }
 
 enum Status {
-  PENDING
-  SHIPPED
-  DELIVERED
+  pending
+  shipped
+  delivered
 }
 
 
 model Order {
   id String @id @default(uuid())
   orderedBooks Json[]
-  status Status @default(PENDING)
+  status Status @default(pending)
 
   userId String
   user User @relation(fields: [userId], references: [id])

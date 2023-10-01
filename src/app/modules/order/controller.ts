@@ -8,7 +8,7 @@ import { paginationFields } from "../../../constants/pagination";
 
 const createOrder = catchAsync(async (req: Request, res: Response) => {
   const order = {
-    userId: "f5233098-d9d4-4bc4-8574-001e46df6983",
+    userId: req.user?.userId,
     orderedBooks: req.body.orderedBooks,
   };
 
@@ -22,10 +22,10 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getOrders = catchAsync(async (req: Request, res: Response) => {
+const getOrdersForAdmin = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, paginationFields);
 
-  const { meta, data } = await OrderService.getOrders(options);
+  const { meta, data } = await OrderService.getOrdersForAdmin(options);
 
   sendResponse<Order[]>(res, {
     statusCode: 200,
@@ -36,13 +36,12 @@ const getOrders = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getOrdersForSpecificCustomer = catchAsync(
+const getOrderForSpecificCustomer = catchAsync(
   async (req: Request, res: Response) => {
     const options = pick(req.query, paginationFields);
-    const userId = "f5233098-d9d4-4bc4-8574-001e46df6983";
 
-    const { meta, data } = await OrderService.getOrdersForSpecificCustomer(
-      userId,
+    const { meta, data } = await OrderService.getOrderForSpecificCustomer(
+      req.user?.userId,
       options
     );
 
@@ -69,7 +68,7 @@ const getOrder = catchAsync(async (req: Request, res: Response) => {
 
 export const OrderController = {
   createOrder,
-  getOrders,
-  getOrdersForSpecificCustomer,
+  getOrdersForAdmin,
+  getOrderForSpecificCustomer,
   getOrder,
 };

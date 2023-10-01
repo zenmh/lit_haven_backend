@@ -10,7 +10,7 @@ const ZSignup = z.object({
       .enum([...Object.keys(Role)] as [string, ...string[]], {
         required_error: "Role is required !!",
       })
-      .default(Role.CUSTOMER),
+      .default(Role.customer),
     contactNo: z.string({ required_error: "Contact number is required !!" }),
     address: z.string({ required_error: "Address is required !!" }),
     profileImg: z.string({ required_error: "Profile image is required !!" }),

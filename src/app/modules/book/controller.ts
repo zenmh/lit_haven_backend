@@ -21,8 +21,15 @@ const createBook = catchAsync(async (req: Request, res: Response) => {
 const getBooks = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, bookFilterableFields);
   const options = pick(req.query, paginationFields);
+  const minPrice = Number(req.query?.minPrice);
+  const maxPrice = Number(req.query?.maxPrice);
 
-  const { meta, data } = await BookService.getBooks(filters, options);
+  const { meta, data } = await BookService.getBooks(
+    filters,
+    options,
+    minPrice,
+    maxPrice
+  );
 
   sendResponse<Book[]>(res, {
     statusCode: 200,

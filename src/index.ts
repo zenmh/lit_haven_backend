@@ -5,7 +5,7 @@ import config from "./config";
 const run = () => {
   try {
     const server: Server = app.listen(config.port, () =>
-      console.log(`Lit Haven Running on http://localhost:${config.port}`)
+      console.log(`Lit Haven Running On http://localhost:${config.port}`)
     );
 
     const exitHandler = () => {

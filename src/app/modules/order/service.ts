@@ -26,7 +26,7 @@ const createOrder = async (data: IOrderDataRequest): Promise<Order> => {
   return result;
 };
 
-const getOrders = async (
+const getOrdersForAdmin = async (
   options: IPaginationOptions
 ): Promise<IGenericResponse<Order[]>> => {
   const { page, limit, skip, sortBy, sortOrder } = calculatePagination(options);
@@ -46,11 +46,15 @@ const getOrders = async (
   };
 };
 
-const getOrdersForSpecificCustomer = async (
+const getOrderForSpecificCustomer = async (
   userId: string,
   options: IPaginationOptions
 ): Promise<IGenericResponse<Order[]>> => {
   const { page, limit, skip, sortBy, sortOrder } = calculatePagination(options);
+
+  const isUserExist = await prisma.user.findFirst({ where: { id: userId } });
+
+  if (!isUserExist) throw new ApiError(400, "User not found !");
 
   const result = await prisma.order.findMany({
     skip,
@@ -76,7 +80,7 @@ const getOrder = async (id: string): Promise<Order | null> => {
 
 export const OrderService = {
   createOrder,
-  getOrders,
-  getOrdersForSpecificCustomer,
+  getOrdersForAdmin,
+  getOrderForSpecificCustomer,
   getOrder,
 };

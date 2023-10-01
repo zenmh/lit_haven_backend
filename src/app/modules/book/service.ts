@@ -17,7 +17,9 @@ const createBook = async (data: Book): Promise<Book> => {
 
 const getBooks = async (
   { searchTerm, ...filtersData }: IBookFilters,
-  options: IPaginationOptions
+  options: IPaginationOptions,
+  minPrice: number | undefined,
+  maxPrice: number | undefined
 ): Promise<IGenericResponse<Book[]>> => {
   const { limit, page, skip, sortBy, sortOrder } = calculatePagination(options);
 
@@ -28,6 +30,18 @@ const getBooks = async (
       OR: bookSearchableFields.map((field) => ({
         [field]: { contains: searchTerm, mode: "insensitive" },
       })),
+    });
+  }
+
+  if (minPrice && !isNaN(minPrice)) {
+    andConditions.push({
+      price: { gte: minPrice },
+    });
+  }
+
+  if (maxPrice && !isNaN(maxPrice)) {
+    andConditions.push({
+      price: { lte: maxPrice },
     });
   }
 
