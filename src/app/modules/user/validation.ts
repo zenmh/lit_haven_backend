@@ -8,7 +8,7 @@ const ZUpdateUser = z.object({
     password: z.string().optional(),
     role: z
       .enum([...Object.keys(Role)] as [string, ...string[]])
-      .default(Role.CUSTOMER)
+      .default(Role.customer)
       .optional(),
     contactNo: z.string().optional(),
     address: z.string().optional(),

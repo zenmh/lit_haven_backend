@@ -4,7 +4,8 @@
   "description": "The site is a backend for a book website.",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "postinstall": "prisma generate"
   },
   "keywords": [
     "lit",

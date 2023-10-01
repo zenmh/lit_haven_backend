@@ -4,11 +4,22 @@ import { IPaginationOptions } from "../../../interfaces/pagination";
 import { calculatePagination } from "../../../helpers/paginationHelpers";
 import { userSearchableFields } from "./constant";
 import { IGenericResponse } from "../../../interfaces/common";
+import { IUserFilters, IUserResponse } from "./interface";
+
+const select = {
+  id: true,
+  name: true,
+  email: true,
+  role: true,
+  contactNo: true,
+  address: true,
+  profileImg: true,
+};
 
 const getUsers = async (
   { searchTerm, ...filtersData }: IUserFilters,
   options: IPaginationOptions
-): Promise<IGenericResponse<User[]>> => {
+): Promise<IGenericResponse<IUserResponse[]>> => {
   const { limit, page, skip, sortBy, sortOrder } = calculatePagination(options);
 
   const andConditions = [];
@@ -36,6 +47,7 @@ const getUsers = async (
     where,
     skip,
     take: limit,
+    select,
     orderBy:
       sortBy && sortOrder ? { [sortBy]: sortOrder } : { createdAt: "desc" },
   });
@@ -48,10 +60,10 @@ const getUsers = async (
   };
 };
 
-const getUser = async (id: string): Promise<User | null> => {
+const getUser = async (id: string): Promise<IUserResponse | null> => {
   const result = await prisma.user.findFirst({
     where: { id },
-    include: { orders: true },
+    select,
   });
 
   return result;
@@ -60,16 +72,20 @@ const getUser = async (id: string): Promise<User | null> => {
 const updateUser = async (
   id: string,
   payload: Partial<User>
-): Promise<User> => {
-  const result = await prisma.user.update({ where: { id }, data: payload });
+): Promise<IUserResponse> => {
+  const result = await prisma.user.update({
+    where: { id },
+    data: payload,
+    select,
+  });
 
   return result;
 };
 
-const deleteUser = async (id: string): Promise<User> => {
+const deleteUser = async (id: string): Promise<IUserResponse> => {
   const result = await prisma.user.delete({
     where: { id },
-    include: { orders: true },
+    select,
   });
 
   return result;
