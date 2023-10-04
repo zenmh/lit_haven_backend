@@ -2,6 +2,8 @@
 
 **Live Server** https://lit-haven-server.vercel.app
 
+#### NOTE: Please Hit All Routes With Proper Required Data. Cause There Have An Issue With ApiError In Global Error Handler.
+
 ### Application Routes
 
 #### User
